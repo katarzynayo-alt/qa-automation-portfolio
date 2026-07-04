@@ -1,65 +1,97 @@
-# QA Automation Pet Project
+# QA Automation Portfolio — Python + Playwright
 
-Пет-проект для портфолио тестировщика: UI + API автотесты на Python + Playwright.
+Projekt automatyzacji testów stworzony jako portfolio testera oprogramowania.
 
-## Что внутри
+## Co zawiera projekt
 
-- **UI-тесты** — https://www.saucedemo.com (логин, добавление товара в корзину, чекаут)
-- **API-тесты** — https://reqres.in (CRUD по пользователям)
-- **Page Object Model** — структура страниц отдельно от тестов
-- **CI/CD** — автозапуск тестов в GitHub Actions при каждом пуше
-- **Отчёты** — pytest-html (можно заменить на Allure позже)
+- **Testy UI** — https://www.saucedemo.com (logowanie, dodawanie do koszyka)
+- **Testy API** — https://reqres.in (operacje CRUD na użytkownikach)
+- **Page Object Model** — strony oddzielone od logiki testów
+- **CI/CD** — automatyczne uruchamianie testów w GitHub Actions przy każdym pushu
+- **Raporty** — pytest-html
 
-## Структура проекта
+## Struktura projektu
 
 ```
-pet_project/
-├── pages/              # Page Objects (UI)
+qa-automation-portfolio/
+├── pages/                  # Page Objects (UI)
 │   ├── base_page.py
 │   ├── login_page.py
 │   └── inventory_page.py
 ├── tests/
-│   ├── ui/              # UI-тесты (Playwright)
+│   ├── ui/                 # Testy UI (Playwright)
 │   │   ├── test_login.py
 │   │   └── test_cart.py
-│   └── api/             # API-тесты (requests)
+│   └── api/                # Testy API (requests)
 │       └── test_users.py
-├── conftest.py          # фикстуры pytest
+├── conftest.py             # Fixtures pytest
 ├── pytest.ini
 ├── requirements.txt
 └── .github/workflows/tests.yml
 ```
 
-## Установка
+## Przypadki testowe
+
+### UI — Logowanie
+| Test | Opis |
+|------|------|
+| `test_successful_login` | Poprawne logowanie z prawidłowymi danymi |
+| `test_login_with_invalid_password` | Logowanie z błędnym hasłem — oczekiwany błąd |
+| `test_login_with_empty_fields` | Logowanie z pustymi polami — oczekiwany błąd |
+
+### UI — Koszyk
+| Test | Opis |
+|------|------|
+| `test_add_single_item_to_cart` | Dodanie produktu do koszyka |
+| `test_inventory_has_items` | Weryfikacja liczby produktów na stronie |
+
+### API — Użytkownicy
+| Test | Opis |
+|------|------|
+| `test_get_users_list` | GET lista użytkowników — status 200 |
+| `test_get_single_user` | GET pojedynczy użytkownik — status 200 |
+| `test_get_user_not_found` | GET nieistniejący użytkownik — status 404 |
+| `test_create_user` | POST tworzenie użytkownika — status 201 |
+| `test_update_user` | PUT aktualizacja użytkownika — status 200 |
+| `test_delete_user` | DELETE usunięcie użytkownika — status 204 |
+
+## Instalacja
 
 ```bash
-python -m venv venv
-source venv/bin/activate      # Windows: venv\Scripts\activate
+python3 -m venv venv
+source venv/bin/activate
 pip install -r requirements.txt
 playwright install chromium
 ```
 
-## Запуск тестов
+## Uruchamianie testów
 
 ```bash
-# Все тесты
-pytest
+# Wszystkie testy
+pytest -v
 
-# Только UI
-pytest tests/ui
+# Tylko testy UI
+pytest tests/ui -v
 
-# Только API
-pytest tests/api
+# Tylko testy API
+pytest tests/api -v
 
-# С HTML-отчётом
+# Z raportem HTML
 pytest --html=report.html --self-contained-html
 ```
 
-## Roadmap (что добавить дальше)
+## Stos technologiczny
 
-- [ ] Allure-отчёты вместо pytest-html
-- [ ] Параметризация тестов (разные пользователи/товары)
-- [ ] Docker-контейнер для запуска тестов
-- [ ] Параллельный запуск (pytest-xdist)
-- [ ] Покрытие негативных кейсов (невалидный логин, пустая корзина и т.д.)
-- [ ] Логирование шагов теста
+- **Python 3.x**
+- **Playwright** — automatyzacja przeglądarki
+- **pytest** — framework testowy
+- **requests** — testy API
+- **GitHub Actions** — CI/CD
+
+## Plany rozwoju
+
+- [ ] Raporty Allure
+- [ ] Parametryzacja testów
+- [ ] Docker
+- [ ] Uruchamianie równoległe (pytest-xdist)
+- [ ] Negatywne przypadki testowe
